@@ -1,0 +1,15 @@
+## Interface: 11200
+## Title: Where To Now?
+## Author: Jehris & Kjasi
+## Version: 1.1
+## Notes: Helps you determine where to go in order to level.
+## URL: None Yet
+## X-Category: Information
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: WhereToNow_Options
+../../FrameXML/Fonts.xml
+localization.lua
+database.lua
+main.lua
+main.xml

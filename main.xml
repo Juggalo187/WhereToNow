@@ -1,0 +1,120 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Frame name = "WhereToNow_Frame" hidden="false">
+		<Scripts>
+			<OnLoad>WhereToNow_Load();</OnLoad>
+		</Scripts>
+	</Frame>
+	<GameTooltip name="WhereToNowTooltip" inherits="GameTooltipTemplate" parent="UIParent"/>
+	<Button name="WhereToNowMinimapButton" parent="Minimap" hidden="false" movable="true">
+		<Size>
+			<AbsDimension x="33" y="33"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="Minimap">
+				<Offset>
+					<AbsDimension x="-9" y="-5"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBackground" file="Interface\Minimap\UI-Minimap-Background">
+					<Size>
+						<AbsDimension x="19" y="19"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="-1" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentBorder" file="Interface\Minimap\MiniMap-TrackingBorder">
+					<Size>
+						<AbsDimension x="52" y="52"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture file="Interface\AddOns\WhereToNow\images\wtn.tga">
+					<Size x="18" y="18"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset x="-1" y="2"/>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.6" top="0" bottom="0.6" />
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentShine" file="Interface\ComboFrame\ComboPoint" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="3" y="3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.5625" right="1" top="0" bottom="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+				self:SetFrameLevel(this:GetFrameLevel()+1);
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnShow>
+				WhereToNowMinimapButtonBackground:SetAlpha(0.6);
+			</OnShow>
+			<OnClick>
+				if ( arg1 == "LeftButton" ) then
+					WhereToNow_Main();
+				end
+			</OnClick>
+			<OnEnter>
+				local title = WHERETONOW_TITLE;
+				local tip = WHERETONOW_TOOLTIP;
+				if ( GetCVar("UberTooltips") == "1" ) then
+					GameTooltip_SetDefaultAnchor(GameTooltip, UIParent);
+					GameTooltip:SetText(title);
+				end
+				GameTooltip_AddNewbieTip(title, 1.0, 1.0, 1.0, tip, 1);
+				WhereToNowTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT");
+				local tooltip = WhereToNow_Tooltip();
+				WhereToNowTooltip:SetText(title);
+				WhereToNowTooltip:AddLine(tooltip,1,1,1);
+				WhereToNowTooltip:Show();
+			</OnEnter>
+			<OnLeave>
+				WhereToNowTooltip:Hide();
+				GameTooltip:Hide();
+			</OnLeave>
+			
+			<OnMouseUp>
+				this:StopMovingOrSizing();
+				this.isMoving = false;
+			</OnMouseUp>
+			
+			<OnDragStart>
+				self:StartMoving();
+				self.isMoving = true;
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+				self.isMoving = false;
+			</OnDragStop>
+		</Scripts>
+
+		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
+	</Button>
+</Ui>
