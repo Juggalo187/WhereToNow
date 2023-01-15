@@ -69,9 +69,9 @@
 		</Layers>
 		<Scripts>
 			<OnLoad>
-				self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
-				self:SetFrameLevel(this:GetFrameLevel()+1);
-				self:RegisterForDrag("LeftButton");
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+				this:SetFrameLevel(this:GetFrameLevel()+1);
+				this:RegisterForDrag("LeftButton");
 			</OnLoad>
 			<OnShow>
 				WhereToNowMinimapButtonBackground:SetAlpha(0.6);
